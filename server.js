@@ -19,6 +19,9 @@ const Player = mongoose.model("Player", {
 const ERROR_MISSING_USERNAME = "`username` field is missing in request body";
 const ERROR_GAME_NOT_STARTED = "Game has not been started for this player yet";
 
+const MAX_DELAY = 1600;
+const MIN_DELAY = 150;
+
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
@@ -66,7 +69,9 @@ app.post("/action", async (req, res) => {
   const player = await Player.findOne({ username });
   const room = await makeAction(player, { type, direction, target });
 
-  res.json(room);
+  setTimeout(() => {
+    res.json(room);
+  }, Math.random() * (MAX_DELAY - MIN_DELAY) + MIN_DELAY);
 });
 
 app.listen(port, () => {
