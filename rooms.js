@@ -69,13 +69,46 @@ export const rooms = {
   },
   5: {
     coordinates: "0,2",
-    description: "[under construction]",
+    description:
+      "As you move through the room, the walls change colors with every step you take. The buzzing and clicking from before now seem to form one harmonious melody.  They respond to your every movement.",
     actions: [
       {
         type: "move",
         direction: "South",
-        description: "Javascript complete",
+        description:
+          "Through the door you see that the gizmos, previously scattered on the floor, have formed one complete, whirring machine.  ",
+      },
+      {
+        type: "move",
+        direction: "North",
+        description:
+          "Looking to the North, you see an arch leading to room containing a large chest.  Papers and scrolls are stuck in the mouth of the ornate container, as if someone store them in a hurry. Empty bookshelves line the room",
       },
     ],
+  },
+  6: {
+    coordinates: "0,3",
+    description:
+      "The mouth of the chest swings open. The papers spring from the chest, whirling around your head.  You shield your face, but an instant later all is calm.  The papers, books and scrolls from the chest are now neatly arranged on the bookshelves around the room.",
+    actions: [
+      {
+        type: "move",
+        direction: "South",
+        description:
+          "A calm, faint melody flows into the room from the archway to the South.  Colors bounce calmly through the threshold. ",
+      },
+      {
+        type: "move",
+        direction: "East",
+        description:
+          "You see a bright light through an opening in the wall to the east. ",
+      },
+    ],
+  },
+  7: {
+    coordinates: "1,3",
+    description:
+      "As you step into the light, you feel an immesnse relief and calm flow over you. It feels like an important journey has ended, but you get the sense that a new one is just beginning...",
+    actions: [],
   },
 };
