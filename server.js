@@ -1,23 +1,24 @@
-import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
-import mongoose from "mongoose";
-import { getRoomForPlayer, makeAction } from "./roomsLogic.js";
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import { getRoomForPlayer, makeAction } from './roomsLogic.js';
 
-const appName = "labyrinth";
+const appName = 'labyrinth';
 const mongoUrl =
-  process.env.MONGO_URL || "mongodb://localhost/TechnigoAdventure";
+  process.env.MONGO_URL || 'mongodb://localhost/TechnigoAdventure';
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
-const Player = mongoose.model("Player", {
+const Player = mongoose.model('Player', {
   username: String,
   roomId: { type: Number, default: 1 },
   flags: { type: [Number], default: [] },
 });
 
-const ERROR_MISSING_USERNAME = "`username` field is missing in request body";
-const ERROR_GAME_NOT_STARTED = "Game has not been started for this player yet";
+const ERROR_MISSING_USERNAME = '`username` field is missing in request body';
+const ERROR_MISSING_DIRECTION = '`direction` field is missing in request body';
+const ERROR_GAME_NOT_STARTED = 'Game has not been started for this player yet';
 
 const MAX_DELAY = 1600;
 const MIN_DELAY = 150;
@@ -27,7 +28,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post("/start", async (req, res) => {
+app.post('/start', async (req, res) => {
   const { username } = req.body;
 
   // Check for required fields
@@ -50,12 +51,18 @@ app.post("/start", async (req, res) => {
   const room = await getRoomForPlayer(player);
   res.json(room);
 });
-app.post("/action", async (req, res) => {
+app.post('/action', async (req, res) => {
   const { type, direction, target, username } = req.body;
 
   // Check for required fields
   if (!username) {
     res.status(400).json({ error: ERROR_MISSING_USERNAME });
+    return;
+  }
+
+  // Check for required fields
+  if (!direction) {
+    res.status(400).json({ error: ERROR_MISSING_DIRECTION });
     return;
   }
 
